@@ -9,11 +9,13 @@ public class FluxAndMonoGeneratorService {
 
 	public Flux<String> namesFlux(){
 		
-		return Flux.fromIterable(List.of("alex","ben","chloe"));	//db or a remote service call
+		return Flux.fromIterable(List.of("alex","ben","chloe"))
+				.log();	//db or a remote service call
 	}
 	
 	public Mono<String> nameMono(){
-		return Mono.just("alex");
+		return Mono.just("alex")
+				.log();
 	}
 	
 	public static void main(String[] args) {
@@ -22,6 +24,8 @@ public class FluxAndMonoGeneratorService {
 		
 		fluxAndMonoGeneratorService.namesFlux()
 			.subscribe(name -> System.out.println("Name is : " + name));
+		
+		System.out.println("-----------------------------");
 		
 		fluxAndMonoGeneratorService.nameMono()
 		.subscribe(name -> System.out.println("Mono name is : " + name));
