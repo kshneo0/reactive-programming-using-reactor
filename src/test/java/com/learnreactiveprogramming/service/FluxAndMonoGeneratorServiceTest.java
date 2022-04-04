@@ -36,10 +36,13 @@ public class FluxAndMonoGeneratorServiceTest {
 	@Test
 	void namesFlux_map() {
 		
-		var namesFlux = fluxAndMonoGeneratorService.namesFlux_map();
+		int stringLength = 3;
+		var namesFlux = fluxAndMonoGeneratorService.namesFlux_map(stringLength);
 		
 		StepVerifier.create(namesFlux)
-			.expectNext("ALEX","BEN","CHLOE")
+//			.expectNext("ALEX","BEN","CHLOE")
+//			.expectNext("ALEX","CHLOE")
+			.expectNext("4-ALEX","5-CHLOE")
 			.verifyComplete();
 	}
 	
