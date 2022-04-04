@@ -1,0 +1,232 @@
+
+------------------------------
+섹션 1: Introduction
+------------------------------
+1. Course Introduction &amp; Objectives
+------------------------------
+2. Prerequisites
+------------------------------
+섹션 2: Course Slides
+------------------------------
+3. Course Slides
+------------------------------
+섹션 3: Introduction to Reactive Programming
+------------------------------
+4. Why Reactive Programming?
+------------------------------
+5. What is Reactive Programming ?
+------------------------------
+6. Introduction to Reactive Streams
+------------------------------
+섹션 4: Getting Started with Project Reactor
+------------------------------
+7. Introduction to Project Reactor
+------------------------------
+8. Reactor Reactive Types - Flux and Mono
+------------------------------
+섹션 5: Setting up the Project for this course
+------------------------------
+9. Project SetUp
+------------------------------
+섹션 6: Functional Programming in Modern Java
+------------------------------
+10. Imperative Style vs Functional Style
+------------------------------
+섹션 7: Lets create our very first Flux and Mono
+------------------------------
+11. Let's write our very first Flux
+------------------------------
+12. Let's write our very first Mono
+------------------------------
+13. Reactive Stream Events
+------------------------------
+14. Testing Flux using JUnit5
+------------------------------
+과제 1: Testing Mono using JUnit5
+------------------------------
+섹션 8: Transforming Flux and Mono
+------------------------------
+15. Transform using map() Operator
+------------------------------
+16. Transforming Data Using Operators in Project Reactor
+------------------------------
+17. Reactive Streams are Immutable
+------------------------------
+18. Filter using filter() Operator
+------------------------------
+과제 2: Map , Filter Operators in Mono
+------------------------------
+19. Advanced transform using the flatMap() Operator
+------------------------------
+20. Asynchronous Operations using flatMap() Operator
+------------------------------
+21. Advanced transform using the concatMap() Operator
+------------------------------
+22. flatMap( ) operator in Mono
+------------------------------
+23. flatMapMany( ) operator in Mono
+------------------------------
+24. Transform using the transform() Operator
+------------------------------
+25. Handling empty data using defaultIfEmpty and switchIfEmpty() Operators
+------------------------------
+과제 3: DefaultIfEmpty and SwitchIfEmpty in Mono Operator
+------------------------------
+섹션 9: Combining Flux and Mono
+------------------------------
+26. Introduction to Combining Reactive Streams
+------------------------------
+27. concat() &amp; concatWith() operator
+------------------------------
+과제 4: Assignment for Writing JUnit5 Test Cases for concatWith() using Flux and Mono
+------------------------------
+28. Combining Reactive Streams using merge() and mergeWith() Operators
+------------------------------
+과제 5: Assignment for Writing JUnit5 Test Cases for mergeWith using Flux and Mono
+------------------------------
+29. Combining Reactive Streams using mergeSequential() operator
+------------------------------
+30. Combining Reactive Streams using zip and zipWith() Operator
+------------------------------
+과제 6: Assignment for Writing JUnit5 Test Cases for zipWith using Flux and Mono
+------------------------------
+섹션 10: Build Movie ReactiveService using Project Reactor
+------------------------------
+31. Overview of this MovieService
+------------------------------
+32. Retrieve all of the MovieInfo
+------------------------------
+33. Retrieve MovieInfo by movieId
+------------------------------
+과제 7: Implement getMovieById using FlatMap operator in Mono
+------------------------------
+섹션 11: doOn* CallBacks - Peeking into a Sequence
+------------------------------
+34. doOn* CallBacks
+------------------------------
+섹션 12: Exception/Error Handling in Flux and Mono
+------------------------------
+35. Exceptions in Reactive Streams
+------------------------------
+36. Introduction to Exception Handling Operators
+------------------------------
+37. onErrorReturn() : Exception Handling Operator
+------------------------------
+38. onErrorResume() : Exception Handling Operator
+------------------------------
+39. onErrorContinue() : Exception Handling Operator
+------------------------------
+40. onErrorMap() : Exception Handling Operator
+------------------------------
+41. doOnError() : Catching Exceptions and Throw the error
+------------------------------
+42. Error Handling Operators in Mono
+------------------------------
+실전 테스트 1: Explore onErrorMap() in Mono
+------------------------------
+과제 8: Explore onErrorContinue() Operator in Mono
+------------------------------
+섹션 13: Implement Exception Handling in Movies Reactive Service
+------------------------------
+43. Exception Handling in MoviesReactiveService using onErrorMap
+------------------------------
+44. Test Exception in MoviesReactiveService using Mockito
+------------------------------
+섹션 14: Retry, Repeat using retry(), retryWhen(), repeat()
+------------------------------
+45. Retry Exceptions using retry() and retry(n)
+------------------------------
+46. Retry Specific Exceptions using retryWhen()
+------------------------------
+47. Repeat a Sequence using repeat() and repeat(n)
+------------------------------
+섹션 15: Reactors Execution Model - Schedulers, Threads and Threadpool
+------------------------------
+48. Reactor Execution Model
+------------------------------
+49. Switching Threads using publishOn()
+------------------------------
+50. Switching Threads using subscribeOn()
+------------------------------
+섹션 16: Making Blocking Calls in MovieReactiveService
+------------------------------
+51. Making Blocking calls in MovieReactiveService
+------------------------------
+섹션 17: BackPressure
+------------------------------
+52. Introduction to BackPressure
+------------------------------
+53. Let's implement BackPressure
+------------------------------
+54. Write a JUnit test for backPressure
+------------------------------
+55. Handling Backpressure using onBackpressureDrop()
+------------------------------
+56. Handling Backpressure using onBackpressureBuffer()
+------------------------------
+57. Handling Backpressure using onBackpressureError()
+------------------------------
+섹션 18: Explore Data Parallelism in Project Reactor
+------------------------------
+58. Parallelism using parallel() and runOn() operator
+------------------------------
+59. Parallelism using flatmap() operator
+------------------------------
+60. Parallelism using flatMapSequential() operator
+------------------------------
+섹션 19: Cold &amp; Hot Streams
+------------------------------
+61. Cold &amp; Hot Streams
+------------------------------
+62. Cold Streams
+------------------------------
+63. Hot Streams - ConnectableFlux
+------------------------------
+64. Hot Streams - ConnectableFlux using autoConnect and RefCount
+------------------------------
+섹션 20: Testing using VirtualTimeScheduler
+------------------------------
+65. StepVerifier using VirtualTimeScheduler
+------------------------------
+섹션 21: Build NonBlocking RestClient using WebClient
+------------------------------
+66. Overview of the Reactive Movie API
+------------------------------
+67. Build the non-blocking MovieInfoService RestClient
+------------------------------
+68. Unit Test NonBlocking Client using StepVerifier and JUnit
+------------------------------
+69. Build the non-blocking MovieInfoService RestClient - getMovieInfoById
+------------------------------
+과제 9: Write a test case for retrieveMovieInfoById_RestClient function
+------------------------------
+70. Build the non-blocking Review RestClient
+------------------------------
+과제 10: Write a test case for retrieveReviewsFlux_RestClient function
+------------------------------
+71. Build getAllMovies non-blocking MovieReactiveService Client
+------------------------------
+72. Build getMovieById non-blocking MovieReactiveService Client
+------------------------------
+섹션 22: Programmatically Creating a Flux/Mono
+------------------------------
+73. Different options of Creating Flux/Mono
+------------------------------
+74. Create Flux using generate()
+------------------------------
+75. Create a Flux using create()
+------------------------------
+76. Create a Mono using create()
+------------------------------
+77. Create a Flux using handle()
+------------------------------
+섹션 23: Debugging in Project Reactor
+------------------------------
+78. Introduction to Debugging in Project Reactor
+------------------------------
+79. Debug Exceptions using  Hooks.onOperatorDebug()
+------------------------------
+80. Debug Exceptions using "checkpoint" operators
+------------------------------
+81. Production-ready Global Debugging using "ReactorDebugAgent"
+------------------------------
