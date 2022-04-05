@@ -293,6 +293,23 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	 public Mono<String> exception_mono_onErrorContinue(String input) {
+
+	        return Mono.just(input).
+	                map(data -> {
+	                    if (data.equals("abc"))
+	                        throw new RuntimeException("Exception Occurred");
+	                    else
+	                        return data;
+	                }).
+	                onErrorContinue((ex, val) -> {
+	                    log.error("Exception is " + ex);
+	                    log.error("Value that caused the exception is " + val);
+
+	                });
+	    }
+	 
+	
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
 		return Flux.fromIterable(List.of("alex","ben","chloe"))
