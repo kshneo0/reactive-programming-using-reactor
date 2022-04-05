@@ -275,6 +275,15 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	public Flux<String> exception_doOnError(){
+		return Flux.just("A","B","C")
+				.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
+				.doOnError(ex -> {
+					log.error("Exception is ", ex);
+				})
+				.log();
+	}
+	
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
 		return Flux.fromIterable(List.of("alex","ben","chloe"))

@@ -400,4 +400,18 @@ public class FluxAndMonoGeneratorServiceTest {
 		.expectError(ReactorException.class)
 		.verify();
 	}
+	
+	@Test
+	void exception_doOnError() {
+		
+		var value = fluxAndMonoGeneratorService.exception_doOnError();
+		
+		StepVerifier.create(value)
+		.expectNext("A","B","C")
+		.expectError(IllegalStateException.class)
+		.verify();
+	}
+	
+	
+	
 }
