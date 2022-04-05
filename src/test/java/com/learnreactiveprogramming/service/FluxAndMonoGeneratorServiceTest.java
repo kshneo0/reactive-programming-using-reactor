@@ -352,4 +352,29 @@ public class FluxAndMonoGeneratorServiceTest {
 		.verifyComplete();
 		
 	}
+	
+	@Test
+	void exception_OnErrorResume() {
+		
+		var e = new IllegalStateException("Not a valis State");
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorResume(e);
+		
+		StepVerifier.create(value)
+		.expectNext("A","B","C","D","E","F")
+		.verifyComplete();
+	}
+	
+	@Test
+	void exception_OnErrorResume_1() {
+		
+		var e = new RuntimeException("Not a valis State");
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorResume(e);
+		
+		StepVerifier.create(value)
+		.expectNext("A","B","C")
+		.expectError(RuntimeException.class)
+		.verify();
+	}
 }

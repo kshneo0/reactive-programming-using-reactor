@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 public class FluxAndMonoGeneratorService {
 
 	public Flux<String> namesFlux(){
@@ -222,7 +224,23 @@ public class FluxAndMonoGeneratorService {
 				.onErrorReturn("D")
 				.log();
 	}
+	
+	public Flux<String> exception_OnErrorResume(Exception e){
 		
+		var recoveryFlux = Flux.just("D","E","F");
+		
+		return Flux.just("A","B","C")
+				.concatWith(Flux.error(e))
+				.onErrorResume(ex -> {
+					log.error("Exception is ", ex);
+					if(ex instanceof IllegalStateException)
+						return recoveryFlux;
+					else
+						return Flux.error(ex);
+				})
+				.log();
+	}
+	
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
 		return Flux.fromIterable(List.of("alex","ben","chloe"))
