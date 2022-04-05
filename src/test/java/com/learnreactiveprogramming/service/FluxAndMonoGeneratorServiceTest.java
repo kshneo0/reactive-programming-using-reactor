@@ -180,5 +180,38 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
+	@Test
+	void explore_concat() {
+		
+
+		var concatFlux = fluxAndMonoGeneratorService.explore_concat();
+		
+		StepVerifier.create(concatFlux)
+			.expectNext("A", "B", "C", "D", "E", "F")
+			.verifyComplete();
+	}
+	
+	@Test
+	void explore_concatWith() {
+		
+
+		var concatFlux = fluxAndMonoGeneratorService.explore_concatWith();
+		
+		StepVerifier.create(concatFlux)
+			.expectNext("A", "B", "C", "D", "E", "F")
+			.verifyComplete();
+	}
+	
+	@Test
+	void explore_concat_mono() {
+
+	    var value = fluxAndMonoGeneratorService.explore_concatWith_mono();
+
+	    //then
+	    StepVerifier.create(value)
+	            .expectNext("A", "B")
+	            .verifyComplete();
+
+	}
 	
 }

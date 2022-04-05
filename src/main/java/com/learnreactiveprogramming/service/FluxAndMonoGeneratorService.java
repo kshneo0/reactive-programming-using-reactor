@@ -118,6 +118,24 @@ public class FluxAndMonoGeneratorService {
 				.log();	//db or a remote service call
 	}
 	
+	public Flux<String> explore_concat(){
+		var abcFlux = Flux.just("A","B","C");
+		var defFlux = Flux.just("D","E","F");
+		return Flux.concat(abcFlux, defFlux).log();
+	}
+	
+	public Flux<String> explore_concatWith(){
+		var abcFlux = Flux.just("A","B","C");
+		var defFlux = Flux.just("D","E","F");
+		return abcFlux.concatWith(defFlux).log();
+	}
+	
+	public Flux<String> explore_concatWith_mono(){
+		var aMono = Mono.just("A");
+		var bMono = Mono.just("B");
+		return aMono.concatWith(bMono).log();
+	}
+		
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
 		return Flux.fromIterable(List.of("alex","ben","chloe"))
