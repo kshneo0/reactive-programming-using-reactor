@@ -15,10 +15,30 @@ public class FluxAndMonoGeneratorService {
 				.log();	//db or a remote service call
 	}
 	
-	public Mono<String> nameMono(){
+	public Mono<String> namesMono(){
 		return Mono.just("alex")
 				.log();
 	}
+	
+	public Mono<String> namesMono_map_filter(int stringLength){
+		return Mono.just("alex")
+				.map(String::toUpperCase)
+				.filter(s -> s.length() > stringLength);
+	}
+	
+	public Mono<List<String>> namesMono_flatMap(int stringLength){
+		return Mono.just("alex")
+				.map(String::toUpperCase)
+				.filter(s -> s.length() > stringLength)
+				.flatMap(this::splitStringMono);	//Mono<List of A,L,E,X>
+	}
+	
+	private Mono<List<String>> splitStringMono(String s) {
+		var charArray = s.split("");
+		var charList = List.of(charArray);	//ALEX -> A, L, E, X
+		return Mono.just(charList);
+	}
+	
 	
 	public Flux<String> namesFlux_map(int stringLength){
 		//filter the string whose length is greater than 3
@@ -89,7 +109,7 @@ public class FluxAndMonoGeneratorService {
 		
 		System.out.println("-----------------------------");
 		
-		fluxAndMonoGeneratorService.nameMono()
+		fluxAndMonoGeneratorService.namesMono()
 		.subscribe(name -> System.out.println("Mono name is : " + name));
 		
 
