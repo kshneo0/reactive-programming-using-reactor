@@ -402,9 +402,9 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void exception_doOnError() {
+	void explore_doOnError() {
 		
-		var value = fluxAndMonoGeneratorService.exception_doOnError();
+		var value = fluxAndMonoGeneratorService.explore_doOnError();
 		
 		StepVerifier.create(value)
 		.expectNext("A","B","C")
@@ -412,6 +412,14 @@ public class FluxAndMonoGeneratorServiceTest {
 		.verify();
 	}
 	
-	
+	@Test
+	void explore_Mono_OnErrorReturn() {
+		
+		var value = fluxAndMonoGeneratorService.explore_Mono_OnErrorReturn();
+		
+		StepVerifier.create(value)
+		.expectNext("abc")
+		.verifyComplete();
+	}	
 	
 }

@@ -275,12 +275,21 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	public Flux<String> exception_doOnError(){
+	public Flux<String> explore_doOnError(){
 		return Flux.just("A","B","C")
 				.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
 				.doOnError(ex -> {
 					log.error("Exception is ", ex);
 				})
+				.log();
+	}
+	
+	public Mono<Object> explore_Mono_OnErrorReturn(){
+		return Mono.just("A")
+				.map(value -> {
+					throw new RuntimeException("Exception Occurred");
+				})
+				.onErrorReturn("abc")
 				.log();
 	}
 	
