@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import com.learnreactiveprogramming.domain.Movie;
+
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 public class MovieReactiveServiceTest {
@@ -56,5 +59,23 @@ public class MovieReactiveServiceTest {
 			//reviewList
 		})
 		.verifyComplete();
+	}
+	
+	@Test
+	void getMovieById_usingFlatMap() {
+
+	    //given
+	    long movieId = 1L;
+
+	    //when
+	    Mono<Movie> movieMono = movieReactiveService.getMovieById_usingFlatMap(movieId);
+
+	    //then
+	    StepVerifier.create(movieMono)
+	            .assertNext(movieInfo -> {
+	                assertEquals("Batman Begins", movieInfo.getMovieInfo().getName());
+	                assertEquals(movieInfo.getReviewList().size(), 2);
+	            })
+	            .verifyComplete();
 	}
 }

@@ -41,4 +41,17 @@ public class MovieReactiveService {
 		
 		return movieInfoMono.zipWith(reviewsFlux, (movieInfo, reviews) -> new Movie(movieInfo, reviews));
 	}
+	
+	public Mono<Movie> getMovieById_usingFlatMap(long movieId) {
+
+	    var movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+	    return movieInfoMono
+	            .flatMap(movieInfo -> {
+	                Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
+	                        .collectList();
+	                return reviewsMono
+	                        .map(movieList -> new Movie( movieInfo, movieList));
+
+	            });
+	}
 }
