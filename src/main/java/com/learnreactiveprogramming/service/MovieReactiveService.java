@@ -96,6 +96,54 @@ public class MovieReactiveService {
 		return retryWhen;
 	}
 	
+	public Flux<Movie> getAllMovies_repeat() {
+		// Error Behavior - Throw a MovieException anytime one of these calls fail
+
+		var movieInfoFlux = movieInfoService.retrieveMoviesFlux();
+		return movieInfoFlux
+				.flatMap(movieInfo -> {
+					Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
+							.collectList();
+					return reviewsMono
+							.map(reviewList -> new Movie(movieInfo, reviewList));
+				})
+				.onErrorMap(ex -> {
+					log.error("Exception is : ", ex);
+					if(ex instanceof NetworkException)
+						throw new MovieException(ex.getMessage());
+					else
+						throw new ServiceException(ex.getMessage());
+				})
+				.retryWhen(getRetryBackoffSpec())
+				.repeat()
+				.log();
+		
+	}
+	
+	public Flux<Movie> getAllMovies_repeat_n(long n) {
+		// Error Behavior - Throw a MovieException anytime one of these calls fail
+		
+		var movieInfoFlux = movieInfoService.retrieveMoviesFlux();
+		return movieInfoFlux
+				.flatMap(movieInfo -> {
+					Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
+							.collectList();
+					return reviewsMono
+							.map(reviewList -> new Movie(movieInfo, reviewList));
+				})
+				.onErrorMap(ex -> {
+					log.error("Exception is : ", ex);
+					if(ex instanceof NetworkException)
+						throw new MovieException(ex.getMessage());
+					else
+						throw new ServiceException(ex.getMessage());
+				})
+				.retryWhen(getRetryBackoffSpec())
+				.repeat(n)
+				.log();
+		
+	}
+	
 	public Mono<Movie> getMovieById(long movieId){
 		
 		

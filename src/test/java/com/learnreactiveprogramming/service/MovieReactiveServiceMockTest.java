@@ -109,4 +109,41 @@ public class MovieReactiveServiceMockTest {
 		verify(reviewService, times(1)).retrieveReviewsFlux(isA(Long.class));
 		
 	}
+	
+	@Test
+	void getAllMovies_repeat() {
+		
+		var errorMessage = "Exception occurred in ReviewService";
+		when(movieInfoService.retrieveMoviesFlux()).thenCallRealMethod();
+		when(reviewService.retrieveReviewsFlux(anyLong())).thenCallRealMethod();
+		
+		var movieFlux  =  reactiveMovieService.getAllMovies_repeat();
+		
+		StepVerifier.create(movieFlux)
+		.expectNextCount(6)
+		.thenCancel()
+		.verify();
+		
+		verify(reviewService, times(6)).retrieveReviewsFlux(isA(Long.class));
+		
+	}
+	
+	@Test
+	void getAllMovies_repeat_n() {
+		
+		var errorMessage = "Exception occurred in ReviewService";
+		when(movieInfoService.retrieveMoviesFlux()).thenCallRealMethod();
+		when(reviewService.retrieveReviewsFlux(anyLong())).thenCallRealMethod();
+		
+		var noOfTimes = 2L;
+		
+		var movieFlux  =  reactiveMovieService.getAllMovies_repeat_n(noOfTimes);
+		
+		StepVerifier.create(movieFlux)
+		.expectNextCount(9)
+		.verifyComplete();
+		
+		verify(reviewService, times(9)).retrieveReviewsFlux(isA(Long.class));
+		
+	}
 }
