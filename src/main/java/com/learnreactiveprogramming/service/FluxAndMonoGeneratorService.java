@@ -212,7 +212,15 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exception_flux(){
 		return Flux.just("A","B","C")
 		.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
-		.concatWith(Flux.just("D"));
+		.concatWith(Flux.just("D"))
+		.log();
+	}
+	
+	public Flux<String> exception_OnErrorReturn(){
+		return Flux.just("A","B","C")
+				.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
+				.onErrorReturn("D")
+				.log();
 	}
 		
 	public Flux<String> namesFlux_concatmap(int stringLength){

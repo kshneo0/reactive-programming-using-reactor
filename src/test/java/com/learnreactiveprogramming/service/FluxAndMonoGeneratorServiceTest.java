@@ -341,4 +341,15 @@ public class FluxAndMonoGeneratorServiceTest {
 		.verify();
 		
 	}
+	
+	@Test
+	void exception_OnErrorReturn() {
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorReturn();
+		
+		StepVerifier.create(value)
+		.expectNext("A","B","C","D")
+		.verifyComplete();
+		
+	}
 }
