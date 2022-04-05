@@ -3,6 +3,7 @@ package com.learnreactiveprogramming.service;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -65,7 +66,7 @@ public class FluxAndMonoGeneratorService {
 				.flatMap(s -> splitString(s))
 				.log();	//db or a remote service call
 	}
-	
+		
 	public Flux<String> namesFlux_flatmap_async(int stringLength){
 		//filter the string whose length is greater than 3
 		return Flux.fromIterable(List.of("alex","ben","chloe"))
@@ -73,6 +74,17 @@ public class FluxAndMonoGeneratorService {
 				.filter( s -> s.length() > stringLength)	// 4-ALEX, 5-CHOLE
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E 
 				.flatMap(s -> splitString_withDelay(s))
+				.log();	//db or a remote service call
+	}
+	
+	public Flux<String> namesFlux_transform(int stringLength){
+		//filter the string whose length is greater than 3
+		
+		Function<Flux<String>, Flux<String>> filtermap =  name -> 
+			name.map(String::toUpperCase).filter( s -> s.length() > stringLength);
+		return Flux.fromIterable(List.of("alex","ben","chloe"))
+				.transform(filtermap)
+				.flatMap(s -> splitString(s)) // ALEX, CHLOE -> A, L, E, X, C, H, L, O, E 
 				.log();	//db or a remote service call
 	}
 	
@@ -95,8 +107,8 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> splitString_withDelay(String name){
 		var charArray = name.split("");
 		var delay = new Random().nextInt(1000);
-		return Flux.fromArray(charArray)
-				.delayElements(Duration.ofMillis(delay));
+		return Flux.fromArray(charArray);
+//				.delayElements(Duration.ofMillis(delay));
 	}
 	
 	public Flux<String> namesFlux_immutability(){
