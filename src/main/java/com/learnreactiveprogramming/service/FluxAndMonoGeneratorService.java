@@ -209,7 +209,11 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	
+	public Flux<String> exception_flux(){
+		return Flux.just("A","B","C")
+		.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
+		.concatWith(Flux.just("D"));
+	}
 		
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
