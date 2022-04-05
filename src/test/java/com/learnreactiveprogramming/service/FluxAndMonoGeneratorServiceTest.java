@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.learnreactiveprogramming.exception.ReactorException;
+
 import reactor.test.StepVerifier;
 
 public class FluxAndMonoGeneratorServiceTest {
@@ -387,5 +389,15 @@ public class FluxAndMonoGeneratorServiceTest {
 		.expectNext("A","C","D")
 		.verifyComplete();
 		
+	}
+	@Test
+	void exception_OnErrorMap() {
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorMap();
+		
+		StepVerifier.create(value)
+		.expectNext("A")
+		.expectError(ReactorException.class)
+		.verify();
 	}
 }
