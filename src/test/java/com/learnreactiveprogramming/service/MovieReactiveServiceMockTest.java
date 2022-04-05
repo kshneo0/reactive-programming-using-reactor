@@ -1,6 +1,9 @@
 package com.learnreactiveprogramming.service;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -8,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import com.learnreactiveprogramming.exception.MovieException;
 
 import reactor.test.StepVerifier;
 
@@ -52,6 +53,24 @@ public class MovieReactiveServiceMockTest {
 //		.expectError(MovieException.class)
 		.expectErrorMessage(errorMessage)
 		.verify();
+		
+	}
+	
+	@Test
+	void getAllMovies_retry() {
+		
+		var errorMessage = "Exception occurred in ReviewService";
+		when(movieInfoService.retrieveMoviesFlux()).thenCallRealMethod();
+		when(reviewService.retrieveReviewsFlux(anyLong())).thenThrow(new RuntimeException(errorMessage));
+		
+		var movieFlux  =  reactiveMovieService.getAllMovies_retry();
+		
+		StepVerifier.create(movieFlux)
+//		.expectError(MovieException.class)
+		.expectErrorMessage(errorMessage)
+		.verify();
+		
+		verify(reviewService, times(4)).retrieveReviewsFlux(isA(Long.class));
 		
 	}
 }
