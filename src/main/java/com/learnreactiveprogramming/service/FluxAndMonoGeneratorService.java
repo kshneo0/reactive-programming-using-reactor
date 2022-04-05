@@ -49,6 +49,16 @@ public class FluxAndMonoGeneratorService {
 				.log();	//db or a remote service call
 	}
 	
+	public Flux<String> namesFlux_concatmap(int stringLength){
+		//filter the string whose length is greater than 3
+		return Flux.fromIterable(List.of("alex","ben","chloe"))
+				.map(String::toUpperCase)
+				.filter( s -> s.length() > stringLength)	// 4-ALEX, 5-CHOLE
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E 
+				.concatMap(s -> splitString_withDelay(s))
+				.log();	//db or a remote service call
+	}
+	
 	//ALEX -> FLUX(A,L,E,X)
 	public Flux<String> splitString(String name){
 		var charArray = name.split("");
