@@ -24,7 +24,17 @@ public class FluxAndMonoGeneratorService {
 	public Mono<String> namesMono_map_filter(int stringLength){
 		return Mono.just("alex")
 				.map(String::toUpperCase)
-				.filter(s -> s.length() > stringLength);
+				.filter(s -> s.length() > stringLength)
+				.defaultIfEmpty("default");
+	}
+	
+	public Mono<String> namesMono_map_filter_switchIfEmpty(int stringLength) {
+	    Mono<String> defaultMono = Mono.just("default");
+	    return Mono.just("alex")
+	            .map(String::toUpperCase)
+	            .filter(s -> s.length() > stringLength)
+	            .switchIfEmpty(defaultMono);
+
 	}
 	
 	public Mono<List<String>> namesMono_flatMap(int stringLength){

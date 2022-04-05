@@ -115,6 +115,38 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
+	void namesMono_map_filter_switchIfEmpty() {
+
+	    //given
+	    int stringLength = 4;
+
+	    //when
+	    var stringMono = fluxAndMonoGeneratorService.namesMono_map_filter_switchIfEmpty(stringLength);
+
+	    //then
+	    StepVerifier.create(stringMono)
+	            .expectNext("default")
+	            .verifyComplete();
+
+	}
+	
+	@Test
+	void namesMono_map_empty() {
+
+	    //given
+	    int stringLength = 4;
+
+	    //when
+	    var stringMono = fluxAndMonoGeneratorService.namesMono_map_filter(stringLength);
+
+	    //then
+	    StepVerifier.create(stringMono)
+	            .expectNext("default")
+	            .verifyComplete();
+
+	}
+	
+	@Test
 	void namesFlux_transform() {
 		
 		int stringLength = 3;
