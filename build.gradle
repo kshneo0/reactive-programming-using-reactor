@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id "io.freefair.lombok" version "5.3.0"
+    id "io.freefair.lombok" version "6.4.1"
     id 'eclipse'  // 이클립스 플러그인 추가
 }
 
