@@ -157,6 +157,18 @@ public class FluxAndMonoGeneratorService {
 		var bMono = Mono.just("B");
 		return aMono.mergeWith(bMono).log();
 	}
+	
+	public Flux<String> explore_mergeSequential(){
+		var abcFlux = Flux.just("A","B","C")
+				.delayElements(Duration.ofMillis(100));
+		var defFlux = Flux.just("D","E","F")
+				.delayElements(Duration.ofMillis(125));
+		return Flux.mergeSequential(abcFlux, defFlux).log();
+	}
+	
+	
+	
+	
 		
 	public Flux<String> namesFlux_concatmap(int stringLength){
 		//filter the string whose length is greater than 3
