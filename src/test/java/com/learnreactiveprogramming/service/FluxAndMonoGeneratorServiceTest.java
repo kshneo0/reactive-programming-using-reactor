@@ -214,4 +214,37 @@ public class FluxAndMonoGeneratorServiceTest {
 
 	}
 	
+	@Test
+	void explore_merge() {
+		
+
+		var value = fluxAndMonoGeneratorService.explore_merge();
+		
+		StepVerifier.create(value)
+			.expectNext("A", "D", "B", "E", "C", "F")
+			.verifyComplete();
+	}
+	
+	@Test
+	void explore_mergeWith() {
+		
+
+		var value = fluxAndMonoGeneratorService.explore_mergeWith();
+		
+		StepVerifier.create(value)
+			.expectNext("A", "D", "B", "E", "C", "F")
+			.verifyComplete();
+	}
+	
+	@Test
+	void explore_mergeWith_mono() {
+
+	    var value = fluxAndMonoGeneratorService.explore_mergeWith_mono();
+
+	    StepVerifier.create(value)
+	            .expectNext("A", "B")
+	            .verifyComplete();
+
+	}
+	
 }
