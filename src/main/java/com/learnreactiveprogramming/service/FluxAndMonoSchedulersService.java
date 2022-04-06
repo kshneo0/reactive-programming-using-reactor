@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.ParallelFlux;
 import reactor.core.scheduler.Schedulers;
 
 @Slf4j
@@ -33,6 +34,19 @@ public class FluxAndMonoSchedulersService {
     	return namesFlux.mergeWith(namesFlux1);
     	
     	
+    }
+    
+    public ParallelFlux<String> explore_parallel() {
+    	
+    	var noOfCores = Runtime.getRuntime().availableProcessors();
+    	log.info("noOfCores : {}", noOfCores);
+    	
+    	return  Flux.fromIterable(namesList)
+//    			.publishOn(Schedulers.parallel())
+    			.parallel()
+    			.runOn(Schedulers.parallel())
+    			.map(this::upperCase)
+    			.log();
     }
     
     public Flux<String> explore_subscribeOn(){
