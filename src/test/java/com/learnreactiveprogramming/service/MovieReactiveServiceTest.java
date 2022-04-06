@@ -1,6 +1,7 @@
 package com.learnreactiveprogramming.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +14,9 @@ public class MovieReactiveServiceTest {
 	
 	private MovieInfoService movieInfoService = new MovieInfoService();;
 	private ReviewService reviewService = new ReviewService();
+	private RevenueService revenueService = new RevenueService();
 	
-	MovieReactiveService movieReactiveService = new MovieReactiveService(movieInfoService, reviewService);
+	MovieReactiveService movieReactiveService = new MovieReactiveService(movieInfoService, reviewService,revenueService);
 
 	@Test
 	void getAllMovies() {
@@ -75,6 +77,24 @@ public class MovieReactiveServiceTest {
 	            .assertNext(movieInfo -> {
 	                assertEquals("Batman Begins", movieInfo.getMovieInfo().getName());
 	                assertEquals(movieInfo.getReviewList().size(), 2);
+	            })
+	            .verifyComplete();
+	}
+	
+	@Test
+	void getMovieById_withRevenue() {
+		//given
+	    long movieId = 100L;
+
+	    //when
+	    Mono<Movie> movieMono = movieReactiveService.getMovieById_withRevenue(movieId);
+
+	    //then
+	    StepVerifier.create(movieMono)
+	            .assertNext(movie -> {
+	                assertEquals("Batman Begins", movie.getMovieInfo().getName());
+	                assertEquals(movie.getReviewList().size(), 2);
+	                assertNotNull(movie.getRevenue());
 	            })
 	            .verifyComplete();
 	}
