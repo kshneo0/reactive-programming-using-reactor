@@ -341,6 +341,21 @@ public class FluxAndMonoGeneratorService {
 		
 	}
 	
+	public Flux<Integer> explore_generate(){
+		
+		return Flux.generate(
+			() -> 1, (state, sink)->{
+				sink.next(state*2);
+				
+				if(state == 10) {
+					sink.complete();
+				}
+				return state + 1;
+			}
+		);
+		
+	}
+	
 	public static void main(String[] args) {
 		
 		FluxAndMonoGeneratorService fluxAndMonoGeneratorService = new FluxAndMonoGeneratorService();
