@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.ParallelFlux;
 import reactor.core.scheduler.Schedulers;
 
@@ -49,6 +50,17 @@ public class FluxAndMonoSchedulersService {
     			.log();
     }
     
+    public Flux<String> explore_parallel_usingFlatmap() {
+
+    	return  Flux.fromIterable(namesList)
+    			.flatMap(name -> {
+    				return Mono.just(name)
+    				.map(this::upperCase)
+    				.subscribeOn(Schedulers.parallel());
+    			})
+    			.log();
+    }
+    
     public Flux<String> explore_subscribeOn(){
     	
     	var namesFlux = flux1(namesList)
@@ -57,6 +69,33 @@ public class FluxAndMonoSchedulersService {
     	
     	var namesFlux1 = flux1(namesList1)
     			.subscribeOn(Schedulers.boundedElastic())
+    			.map( s-> {
+    				log.info("Name is : {}", s);
+    				return s;
+    			})
+    			.log();
+    	
+    	return namesFlux.mergeWith(namesFlux1);
+    	
+    	
+    }
+    
+    public Flux<String> explore_parallel_usingFlatmap_1(){
+    	
+    	var namesFlux = flux1(namesList)
+    			.flatMap(name -> {
+    				return Mono.just(name)
+    				.map(this::upperCase)
+    				.subscribeOn(Schedulers.parallel());
+    			})
+    			.log();
+    	
+    	var namesFlux1 = flux1(namesList1)
+    			.flatMap(name -> {
+    				return Mono.just(name)
+    				.map(this::upperCase)
+    				.subscribeOn(Schedulers.parallel());
+    			})
     			.map( s-> {
     				log.info("Name is : {}", s);
     				return s;
