@@ -26,7 +26,8 @@ public class MovieInfoService {
     public Flux<MovieInfo> retrieveAllMovieInfo_RestClient(){
     	return webClient.get().uri("/v1/movie_infos")
     		.retrieve()
-    		.bodyToFlux(MovieInfo.class);
+    		.bodyToFlux(MovieInfo.class)
+    		.log();
     }
 
 	public  Flux<MovieInfo> retrieveMoviesFlux(){

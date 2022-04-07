@@ -9,6 +9,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -39,8 +40,8 @@ dependencies {
     testImplementation("org.mockito:mockito-junit-jupiter:3.2.4")
 
     //wiremock
-    testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.24.1"
-    implementation "com.github.JensPiegsa:wiremock-extension:0.4.0"
+    testImplementation "com.github.tomakehurst:wiremock-jre8:2.32.0"
+    testImplementation 'com.github.JensPiegsa:wiremock-extension:0.4.0'
 }
 
 test {
