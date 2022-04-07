@@ -29,6 +29,13 @@ public class MovieInfoService {
     		.bodyToFlux(MovieInfo.class)
     		.log();
     }
+    
+    public Mono<MovieInfo> retrieveMovieInfoById_RestClient(Long movieInfoId){
+    	return webClient.get().uri("/v1/movie_infos/{id}",movieInfoId)
+    		.retrieve()
+    		.bodyToMono(MovieInfo.class)
+    		.log();
+    }
 
 	public  Flux<MovieInfo> retrieveMoviesFlux(){
 
