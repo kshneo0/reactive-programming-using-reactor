@@ -1,14 +1,18 @@
 package com.learnreactiveprogramming.service;
 
+import static com.learnreactiveprogramming.util.CommonUtil.delay;
+
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
 import com.learnreactiveprogramming.exception.ReactorException;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -320,19 +324,6 @@ public class FluxAndMonoGeneratorService {
 				.log();	//db or a remote service call
 	}
 	
-	//ALEX -> FLUX(A,L,E,X)
-	public Flux<String> splitString(String name){
-		var charArray = name.split("");
-		return Flux.fromArray(charArray);
-	}
-	
-	public Flux<String> splitString_withDelay(String name){
-		var charArray = name.split("");
-		var delay = new Random().nextInt(1000);
-		return Flux.fromArray(charArray)
-				.delayElements(Duration.ofMillis(delay));
-	}
-	
 	public Flux<String> namesFlux_immutability(){
 		
 		var namesFlux =  Flux.fromIterable(List.of("alex","ben","chloe"));
@@ -341,11 +332,59 @@ public class FluxAndMonoGeneratorService {
 		
 	}
 	
+	public static List<String> names(){
+		delay(1000);
+		return List.of("alex","ben","chloe");
+	}
+	
+	public Flux<String> explore_create() {
+		return Flux.create(sink -> {
+//			names()
+//				.forEach(sink::next);
+			CompletableFuture.supplyAsync( ()-> names())
+				.thenAccept(names -> {
+//					names.forEach(sink::next);
+					names.forEach((name) -> {
+						sink.next(name);
+						sink.next(name);
+					});
+					
+				})
+				//.thenRun(sink::Complete);
+				.thenRun(() -> sendEvents(sink));
+//			sink.complete();
+		});
+	}	
+	
+	public void sendEvents(FluxSink<String> sink) {
+		
+		CompletableFuture.supplyAsync( ()-> names())
+		.thenAccept(names -> {
+			names.forEach(sink::next);
+		})
+		.thenRun(sink::complete);
+
+	}	
+	
+	//ALEX -> FLUX(A,L,E,X)
+	public Flux<String> splitString(String name){
+		var charArray = name.split("");
+		return Flux.fromArray(charArray);
+	}
+
+	public Flux<String> splitString_withDelay(String name){
+		var charArray = name.split("");
+		var delay = new Random().nextInt(1000);
+		return Flux.fromArray(charArray)
+				.delayElements(Duration.ofMillis(delay));
+	}
+	
 	public Flux<Integer> explore_generate(){
 		
 		return Flux.generate(
 			() -> 1, (state, sink)->{
 				sink.next(state*2);
+//				sink.next(state*3);	//error
 				
 				if(state == 10) {
 					sink.complete();
@@ -355,6 +394,7 @@ public class FluxAndMonoGeneratorService {
 		);
 		
 	}
+
 	
 	public static void main(String[] args) {
 		
