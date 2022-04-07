@@ -25,4 +25,15 @@ public class MovieReactiveServiceRestClientTest {
             .verifyComplete();
     	
     }
+    
+    @Test
+    void getMovieById_RestClient() {
+    	
+    	var moviesMono = movieReactiveService.getMovieById_RestClient(1L);
+    	
+    	  StepVerifier.create(moviesMono)
+    	  	.expectNextCount(1)
+            .verifyComplete();
+    	
+    }
 }
