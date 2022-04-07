@@ -263,15 +263,17 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	public Flux<String> exception_OnErrorMap(){
+	public Flux<String> exception_OnErrorMap(Exception e){
 		
-		return Flux.just("A","B","C")
+		return /*Flux.just("A","B","C")
 				.map(name -> {
 					if(name.equals("B"))
 						throw new IllegalStateException("Exception Occurred");
 					return name;
 				})
-				.concatWith(Flux.just("D"))
+				.concatWith(Flux.just("D"))*/
+				Flux.just("A")
+				.concatWith(Flux.error(e))
 				.onErrorMap((ex) -> {
 					log.error("Exception is ", ex);
 					return new ReactorException(ex,ex.getMessage());

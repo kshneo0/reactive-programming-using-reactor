@@ -408,7 +408,9 @@ public class FluxAndMonoGeneratorServiceTest {
 	@Test
 	void exception_OnErrorMap() {
 		
-		var value = fluxAndMonoGeneratorService.exception_OnErrorMap();
+		var e = new IllegalStateException("Not a valis State");
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorMap(e);
 		
 		StepVerifier.create(value)
 		.expectNext("A")
