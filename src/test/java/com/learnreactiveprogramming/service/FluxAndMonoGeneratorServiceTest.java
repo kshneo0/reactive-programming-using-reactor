@@ -496,4 +496,14 @@ public class FluxAndMonoGeneratorServiceTest {
         .verifyComplete();
 	}
 	
+	@Test
+	void explore_handle() {
+		
+		var mono=fluxAndMonoGeneratorService.explore_handle().log();
+		
+		StepVerifier.create(mono)
+		.expectNextCount(2)
+		.verifyComplete();
+	}
+	
 }

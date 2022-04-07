@@ -354,7 +354,16 @@ public class FluxAndMonoGeneratorService {
 				.thenRun(() -> sendEvents(sink));
 //			sink.complete();
 		});
-	}	
+	}
+	
+	public Flux<String> explore_handle(){
+		return Flux.fromIterable(List.of("alex","ben","chloe"))
+				.handle((name, sink) -> {
+					if(name.length() > 3) {
+						sink.next(name.toUpperCase());
+					}
+				});
+	}
 	
 	public Mono<String> explore_create_mono() {
 		return Mono.create(sink -> {
