@@ -59,5 +59,14 @@ public class FluxAndMonoSchedulersServiceTest {
 		.verifyComplete();
 	}
 	
+	@Test
+	void explore_parallel_usingFlatmapsequential() {
+		var flux = fluxAndMonoSchedulersService.explore_parallel_usingFlatmapsequential();
+		
+		StepVerifier.create(flux)
+		.expectNextCount(3)
+		.verifyComplete();
+	}
+	
 	
 }
