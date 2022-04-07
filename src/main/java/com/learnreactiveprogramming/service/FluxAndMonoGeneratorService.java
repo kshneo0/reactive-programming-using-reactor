@@ -273,7 +273,7 @@ public class FluxAndMonoGeneratorService {
 				})
 				.concatWith(Flux.just("D"))*/
 				Flux.just("A")
-				.concatWith(Flux.error(e))
+					.concatWith(Flux.error(e))
 				.onErrorMap((ex) -> {
 					log.error("Exception is ", ex);
 					return new ReactorException(ex,ex.getMessage());

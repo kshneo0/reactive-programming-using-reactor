@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.learnreactiveprogramming.exception.ReactorException;
 
+import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 import reactor.test.scheduler.VirtualTimeScheduler;
 
@@ -405,9 +406,24 @@ public class FluxAndMonoGeneratorServiceTest {
 		.verifyComplete();
 		
 	}
+	
 	@Test
 	void exception_OnErrorMap() {
 		
+		var e = new IllegalStateException("Not a valis State");
+		
+		var value = fluxAndMonoGeneratorService.exception_OnErrorMap(e);
+		
+		StepVerifier.create(value)
+		.expectNext("A")
+		.expectError(ReactorException.class)
+		.verify();
+	}
+	
+	@Test
+	void exception_OnErrorMap_onOperatorDebug() {
+		
+		Hooks.onOperatorDebug();	//권장하는 옵션이 아니다.
 		var e = new IllegalStateException("Not a valis State");
 		
 		var value = fluxAndMonoGeneratorService.exception_OnErrorMap(e);
