@@ -23,4 +23,22 @@ public class ColdAndHotPublisherTest {
 		flux.subscribe(i -> System.out.println("Subscriber 2 : " + i));		
 		
 	}
+	
+	@Test
+	void hotPublisherTest() {
+		
+		var flux = Flux.range(1,10)
+				.delayElements(Duration.ofSeconds(1));
+		
+		ConnectableFlux<Integer> connectableFux = flux.publish();
+		connectableFux.connect();
+		
+		connectableFux.subscribe(i -> System.out.println("Subscriber 1 : " + i));
+		delay(4000);
+		connectableFux.subscribe(i -> System.out.println("Subscriber 2 : " + i));
+		
+		delay(10000);
+			
+		
+	}
 }
